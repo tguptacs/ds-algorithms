@@ -1,0 +1,32 @@
+/*  Function which returns the  root of 
+    the constructed binary tree. */
+Node *createTree(int parent[], int n)
+{
+    Node* root = NULL;
+    unordered_map <int, Node*> m;
+    for (int i = 0; i < n; ++i){
+        int val = parent [i];
+        Node* r = new Node (i);
+        m [i] = r;
+    }
+    
+    for (int i = 0; i < n; ++i){
+        int val = parent [i];
+        Node* r = m [i];
+        if (val == -1)
+            root = r;
+        else {
+            if (m.find (val) != m.end ())
+            {
+                Node* temp = m[val];
+                if (temp->left == NULL){
+                    temp->left = r;
+                }
+                else if (temp->right == NULL){
+                    temp->right = r;
+                }
+            }
+        }
+    }
+    return root;
+}

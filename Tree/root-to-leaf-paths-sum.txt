@@ -1,0 +1,18 @@
+/*You are required to complete below method */
+long long treePathsSumUtil(Node *root, long long sum){
+    if (root == NULL)
+        return 0;
+    sum *= 10;    
+    sum += root->data;
+    if (root->left == NULL && root->right == NULL)
+        return sum;
+    return treePathsSumUtil(root->left, sum)
+            + treePathsSumUtil(root->right, sum);
+}
+
+long long treePathsSum(Node *root)
+{
+    if (root == NULL)
+        return 0;
+    return treePathsSumUtil (root, 0);    
+}

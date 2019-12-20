@@ -1,0 +1,26 @@
+// Should set the nextRight for all nodes
+void connect(Node *p)
+{
+   queue <Node*> q;
+   
+   q.push (p);
+   q.push (NULL);
+   
+   while (!q.empty ()){
+       Node* t = q.front ();
+       q.pop ();
+       
+       if (t != NULL){
+           t->nextRight = q.front ();
+    
+           if (t->left)
+                q.push (t->left);
+           if (t->right)
+                q.push (t->right);
+       }
+       else{
+           if (!q.empty ())
+                q.push (NULL);
+       }
+   }
+}

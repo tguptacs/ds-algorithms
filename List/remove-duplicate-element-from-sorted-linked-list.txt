@@ -1,0 +1,14 @@
+// root: head node
+Node *removeDuplicates(Node *root)
+{
+  Node* head = root;
+  while (root != NULL){
+      Node* temp = root->next;
+      while (temp != NULL && temp->data == root->data){
+            temp = temp->next;
+      }
+      root->next = temp;
+      root = root->next;   
+  }
+  return head;
+}

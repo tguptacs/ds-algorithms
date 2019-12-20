@@ -1,0 +1,38 @@
+#include <iostream>
+using namespace std;
+
+int findMax (int a[], int n)
+{
+    int m = 0;
+    int incl, excl = 0;
+    
+    incl = a [0];
+    m = incl;
+    for (int i = 1; i < n; ++i)
+    {
+        int temp = a [i] + excl;
+        m = max (temp, incl);
+        
+        excl = incl;
+        incl = m;
+    }
+    
+    return m;
+}
+
+int main() {
+	int t = 0;
+	cin >> t;
+	while (t-- > 0)
+	{
+	    int n = 0;
+	    cin >> n;
+	    int a [n] = {0};
+	    for (int i = 0; i < n; ++i)
+	        cin >> a [i];
+	        
+	    int val = findMax (a, n);
+	    cout << val << endl;
+	}
+	return 0;
+}

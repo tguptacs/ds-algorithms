@@ -1,0 +1,95 @@
+Here is the row having 15 seats represented by the String (0, 1, 2, 3, ......... , 14) -
+
+              . . . . x . . x x . . . x . .
+
+Now to make them sit together one of approaches is -
+                  . . . . . . x x x x . . . . .
+				  
+				  
+#include <bits/stdc++.h>
+int Solution::seats(string A) {
+    using std::list;
+    using std::pair;
+    int count = 0;
+    list <pair <int, int>> l;
+    int n = A.size ();
+    // add groups of people
+    for (int i = 0; i < n; ++i)
+    {
+        if (A [i] == '.')
+        {
+            i++;
+            if (i >= n)
+                break;
+        }   
+        int j = i;
+        for (; i < n && A [i] == 'x'; ++i);
+        pair <int, int> p (j, i-1);
+        l.push_back (p);
+    }
+    // Merge groups from both ends
+    while (l.size () > 1)
+    {
+        pair <int, int> left = l.front ();
+        pair <int, int> right = l.back ();
+        
+        int leftLength = left.second - left.first + 1;
+        int rightLength = right.second - right.first + 1;
+        // Merge groups from left end
+        if (leftLength < rightLength)
+        {
+            l.pop_front ();
+            pair <int, int> nextLeft = l.front ();
+            count += leftLength * (nextLeft.first - left.second - 1);
+            l.front().first -= leftLength;
+        }
+        // Merge groups from right end
+        else
+        {
+            l.pop_back ();
+            pair <int, int> nextRight = l.back ();
+            count += rightLength * (right.first - nextRight.second - 1);
+            l.back().second += rightLength;
+        }
+    }
+    
+    return count;
+}
+
+
+or
+
+
+#include <bits/stdc++.h>
+int Solution::seats(string A) {
+    int n = A.length();
+    int count = 0;
+    int l = 0;
+    int r = 0;
+    
+    for (int i = 0; i < n; ++i)
+    {
+        if (A [i] == 'x')
+            r++;
+    }
+    
+    int i = 0;
+    while (i < n){
+        if (r == 0)
+            break;
+        else if (A [i] == 'x')
+        {
+            l++;
+            r--;
+            i++;
+        }
+        else
+        {
+            count += min (l, r);
+            count = count % 10000003;
+            i++;
+        }
+    }
+    
+    return count;
+}

@@ -1,0 +1,31 @@
+// // Should return true if tree is Sum Tree, else false
+bool getSumTree(Node* root, int &sum){
+    if (root == NULL){
+        sum = 0;
+        return 1;
+    }
+    int leftSum, rightSum = 0;    
+    bool left = getSumTree (root->left, leftSum);
+    bool right = getSumTree (root->right, rightSum);
+    if (!root->left && !root->right){
+        sum = root->data;
+        return true;
+    }
+    if (left && right)
+    {
+        if (root->data == (leftSum + rightSum)) 
+        {
+            sum = root->data + leftSum + rightSum;
+            return true;
+        }
+    }
+    return false;
+}
+bool isSumTree(Node* root)
+{
+     if (root == NULL)
+        return true;
+        
+    int sum = 0;
+    return getSumTree (root, sum);
+}

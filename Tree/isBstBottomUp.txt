@@ -1,0 +1,46 @@
+bool isBstUtil (Node* root, int& min, int& max){
+    if (root == NULL) {
+        min = max = 0;
+        return true;
+    }
+    
+	int lmin, lmax = 0;
+	bool lBst = isBstUtil (root->left, lmin, lmax);
+	
+	int rmin, rmax = 0;
+	bool rBst = isBstUtil (root->right, rmin, rmax);
+	
+	if(!root->left && !root->right) {
+		min = max = root->data;
+		return true;
+	}
+	bool ret = true;
+		
+	if (lBst && rBst) {
+		if(root->left && root->data < lmax)
+			ret = false;
+
+		if(root->right && root->data > rmin)
+			ret = false;
+	}
+	else 
+		ret = false;
+	if (ret)
+	{
+		min = lmax > root->data ? root->data : lmax;
+		max = rmin > root->data ? rmin : root->data;
+	}
+	else {
+		min = max = 0;
+	}
+// 	cout << "root: " << root->data << " min " << min << " max " << max << " ret: " << ret << endl; 
+	return ret;
+}
+
+bool isBST(Node* root) {
+    if (root == NULL)
+        return true;
+    int min = INT_MIN;
+    int max = INT_MAX;
+    return isBstUtil (root, min, max);    
+}

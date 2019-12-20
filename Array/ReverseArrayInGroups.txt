@@ -1,0 +1,32 @@
+#include <iostream>
+using namespace std;
+
+void printR (int a[], int s, int e){
+    for (int i = e; i >= s; --i)
+        cout << a [i] << " ";
+}
+void PrintReverse (int a[], int n, int k){
+    for (int i = 0; i < n; ){
+        int nk = i+k;
+        if (nk > n)
+            nk = n;
+        printR (a, i, nk-1);
+        i = nk;
+    }
+}
+int main() {
+int t = 0;
+	cin >> t;
+	while (t-- > 0){
+	    int n = 0;
+	    cin >> n;
+	    int k = 0;
+	    cin >> k;
+	    int a [n] = {0};
+	    for (int i = 0; i< n; ++i) cin >> a[i];
+	    
+	    PrintReverse (a, n, k);
+	    cout << endl;
+	}
+	return 0;
+}

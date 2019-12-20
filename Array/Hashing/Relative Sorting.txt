@@ -1,0 +1,45 @@
+#include <iostream>
+#include <bits/stdc++.h>
+using namespace std;
+
+void PrintRelativeOrder (int arrN [], int arrM [], int n, int ml){
+	map <int, int> m;
+	for (int i = 0; i < n; ++i){
+		if (m.find (arrN [i]) != m.end ())
+			m [arrN[i]]++;
+		else
+			m [arrN[i]] = 1;
+	}
+	
+	for (int i = 0; i < ml; ++i){
+		if (m.find (arrM[i]) != m.end ()){
+			for (int j = 0; j < m [arrM[i]]; ++j){
+				cout << arrM [i] << " ";
+			}
+			m.erase (arrM[i]);
+		}
+	}
+	for (map <int, int>::iterator it = m.begin (); it != m.end (); ++it){
+	    for (int j = 0; j < it->second; ++j){
+		    cout << it->first << " ";
+	    }
+	}
+}
+int main() {
+	int test = 0;
+	cin >> test;
+	while (test-- > 0){
+		int n = 0;
+		int m = 0;
+		cin >> n; cin >> m;
+		int arrN [n] = {0};
+		int arrM [m] = {0};
+		for (int i = 0; i < n; ++i)
+			cin >> arrN [i];
+		for (int i = 0; i < m; ++i)
+			cin >> arrM [i];
+		PrintRelativeOrder (arrN, arrM, n, m);
+		cout << endl;
+	}
+	return 0;
+}

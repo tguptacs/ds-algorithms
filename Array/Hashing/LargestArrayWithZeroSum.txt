@@ -1,0 +1,29 @@
+//Example:
+//Input
+//1
+//8
+//15 -2 2 -8 1 7 10 23
+//
+//Output
+//5
+
+/*You are required to complete this function*/
+int maxLen(int A[],int n)
+{
+    map <int, int> m;
+    int sum = 0;
+    int max = 0;
+    for (int i =0; i < n; ++i){
+        sum += A[i];
+        if (m.find (sum) != m.end ())
+        {
+            if ((i - m[sum]) > max)
+                max = i - m[sum];
+        }
+        else
+            m [sum] = i;
+    }
+    if (sum == 0)
+        return n;
+    return max;
+}

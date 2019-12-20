@@ -1,0 +1,30 @@
+//2
+//3 3
+//2 8
+
+#include <iostream>
+using namespace std;
+
+int FindWays (int rs, int re, int cs, int ce){
+    // cout << rs << re << cs << ce << endl;
+	if (rs == re-1 && cs == ce-1)
+		return 1;
+	if (cs == ce)
+		return 0;
+	if (rs == re)
+		return 0;
+		
+	return FindWays (rs+1, re, cs, ce) + FindWays (rs, re, cs+1, ce);	
+}
+
+int main() {
+	int test = 0;
+	cin >> test;
+	while (test-- > 0){
+		int m, n;
+		cin >> m; cin >> n;
+		
+		cout << FindWays (0, m , 0, n) << endl;
+	}
+	return 0;
+}

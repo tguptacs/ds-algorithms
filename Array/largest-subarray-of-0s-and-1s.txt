@@ -1,0 +1,31 @@
+/*This is a function problem.You only need to complete the function given below*/
+/*You are required to complete this method*/
+int maxLen(int arr[], int n)
+{
+    for (int i = 0; i<n; ++i){
+        if (arr [i] == 0)
+            arr [i] = -1;
+    }
+    unordered_map <int,int> m;
+    int sum = 0;
+    
+    int max = 0;
+    
+    for (int i = 0; i<n; ++i){
+        sum += arr [i];
+        
+        if (sum == 0)
+        {
+            max = i + 1;
+            
+        }
+        
+        if (m.find (sum) != m.end ()){
+            if (max < (i - (m [sum])))
+                max = (i - (m [sum]));
+        }
+        else
+            m [sum] = i;
+    }
+    return max;
+}

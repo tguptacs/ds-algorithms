@@ -1,0 +1,25 @@
+/* The function should print all the paths from root
+ to leaf nodes of the binary tree */
+void printPathsUtil(Node* root, vector<int> v){
+    if (root == NULL)
+        return;
+    v.push_back (root->data);
+    printPathsUtil(root->left, v);
+    printPathsUtil(root->right, v);
+    if (root->left == NULL && root->right == NULL)
+    {
+        for (int i = 0; i < v.size (); ++i){
+            cout << v[i] << " ";
+        }
+        cout << "#";
+        return;
+    }
+} 
+void printPaths(Node* root)
+{
+    if (root == NULL)
+        return;
+    vector<int> v;
+    printPathsUtil(root, v);
+    cout << endl;
+}

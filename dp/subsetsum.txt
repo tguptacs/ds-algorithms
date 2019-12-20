@@ -1,0 +1,73 @@
+#include <iostream>
+using namespace std;
+
+bool isSubsetSum (int a [], int n)
+{
+    int sum = 0;
+    for (int i = 0; i < n; ++i)
+        sum += a [i];
+    // cout << "sum: " << sum << endl;    
+    int half = sum /2;
+    // cout << "half: " << half << endl;
+    int T [n+1][half+1];
+    for (int i = 0; i <= half; ++i)
+        T [0][i] = 0;
+    for (int i = 0; i <= n; ++i)
+        T [i][0] = 1;    
+    
+    for (int j = 1; j <= n; ++j){
+        for (int i = 1; i <= half; ++i)
+        {
+            // cout << "A[j]: " << a [j-1] << "  ";
+            // cout << "i: " << i << endl;
+            if (a [j-1] > i)
+            {
+                T [j][i] = T [j-1][i];
+            }
+            else {
+                T [j][i] = T [j-1][i] || T [j-1][i - a[j-1]];
+            }
+            // cout << "T [j][i]: " << T [j][i] << endl;
+        }
+    }
+    if (T [n][half] == 1)
+    {
+        cout << "found! " << half << endl;
+        int temp = half;
+        int i = n; 
+        int j = half;
+        while (temp > 0){
+            while (T [i-1][j] == 1)
+                i--;
+            temp -= a[i+1];
+            cout << sum << endl;
+            sum -= a[i+1];
+            
+            j = half - a [i+1];
+        }
+    }
+    
+    if (sum == half)
+        return true;
+    return false;    
+}
+
+int main() {
+	int t = 0;
+	cin >> t;
+	while (t-- > 0)
+	{
+	    int n = 0;
+	    cin >> n;
+	    int a [n] = {0};
+	    
+	    for (int i = 0; i < n; ++i) cin >> a [i];
+	    
+	    bool ret = isSubsetSum (a, n);
+	    if (ret)
+	        cout << "YES" << endl;
+	    else
+	        cout << "NO" << endl;
+	}
+	return 0;
+}

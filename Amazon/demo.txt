@@ -1,0 +1,50 @@
+// INCLUDE HEADER FILES NEEDED BY YOUR PROGRAM
+// SOME LIBRARY FUNCTIONALITY MAY BE RESTRICTED
+// DEFINE ANY FUNCTION NEEDED
+// FUNCTION SIGNATURE BEGINS, THIS FUNCTION IS REQUIRED
+vector<int> cellCompete(int* states, int days) 
+{
+    vector <int> v;
+    
+    int copy [10] = {};
+    while (days-- > 0){
+        copy [0] = 0 ^ states [1];
+        copy [7] = 0 ^ states [6];
+        
+        for (int i = 1; i < 7; ++i){
+            copy [i] = states [i-1] ^ states [i+1]; 
+        }
+        
+        for (int i = 0; i < 8; ++i){
+            states [i] = copy [i]; 
+        }
+    }
+    for (int i = 0; i < 8; ++i)
+        v.push_back (copy [i]);
+    
+    return v;
+}
+// FUNCTION SIGNATURE ENDS
+
+
+
+
+// INCLUDE HEADER FILES NEEDED BY YOUR PROGRAM
+// SOME LIBRARY FUNCTIONALITY MAY BE RESTRICTED
+// DEFINE ANY FUNCTION NEEDED
+// FUNCTION SIGNATURE BEGINS, THIS FUNCTION IS REQUIRED
+int gcd (int a, int b){
+    if (a == 0)
+        return b;
+        
+    return gcd (b%a, a);
+}
+int generalizedGCD(int num, int* arr)
+{
+    int g = arr [0];
+    for (int i = 1; i < num; ++i){
+        g = gcd (g, arr [i]);
+    }
+    return g;
+}
+// FUNCTION SIGNATURE ENDS

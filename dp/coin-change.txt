@@ -1,0 +1,43 @@
+#include <iostream>
+using namespace std;
+
+int findWays (int a[], int n, int c){
+    int temp [c] = {0};
+    
+    for (int i = 0; i<n; ++i){
+        int coin = a [i];
+        for (int j = 0; j < c; ++j){
+            int cent = j + 1;
+            
+            if (cent == coin){
+                temp [j] += 1;
+            }
+            else if (cent > coin){
+                int diff = cent - coin;
+                temp [j] += temp [diff-1];
+            }
+        }
+    }
+    
+    return temp [c-1];
+}
+
+int main() {
+	int t = 0;
+	cin >> t;
+	
+	while (t-- > 0){
+	    int n = 0;
+	    cin >> n;
+	    int a[n] = {0};
+	    for (int i = 0; i <n; ++i)
+	        cin >>a [i];
+	        
+	    int c = 0;
+	    cin >> c;
+	    
+	    int ways = findWays (a, n, c);
+	    cout << ways << endl;
+	}
+	return 0;
+}

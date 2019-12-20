@@ -1,0 +1,26 @@
+// This function should convert a given Binary tree to Doubly
+// Linked List
+void bToDLLUtil(Node *root, Node **head_ref, Node* &prev){
+    if (root == NULL)
+        return;
+    bToDLLUtil(root->left, head_ref, prev);
+    if (! *head_ref){
+        *head_ref = root;
+        prev = root;
+    }
+    else
+        {
+            prev->right = root;
+            root->left = prev;
+            prev = prev->right;
+        }
+    bToDLLUtil(root->right, head_ref, prev);
+}
+
+void bToDLL(Node *root, Node **head_ref)
+{
+    if (root == NULL)
+        return;
+    Node* temp = NULL;
+    bToDLLUtil(root, head_ref, temp);
+}

@@ -1,0 +1,128 @@
+/******************************************************************************
+
+                              Online C++ Compiler.
+               Code, Compile, Run and Debug C++ program online.
+Write your code in this editor and press "Run" button to compile and execute it.
+
+*******************************************************************************/
+// Example program
+#include <iostream>
+#include <string>
+using namespace std;
+
+template <typename T> 
+class adder
+{
+	public:
+		adder(){}
+		T add (T a, T b)
+		{
+			return a + b;
+		}
+		~adder()
+		{
+			cout << "releasing object!" << endl;
+		}
+};
+
+class reference_count
+{
+	int count;
+	public:
+		reference_count () : count (0)
+		{}
+		void add_ref ()
+		{
+			count++;
+	    	cout << "incremented ref_count! " << count << endl;	
+		}
+		int remove_ref ()
+		{
+		    count--;
+	    	cout << "decremented ref_count! " << count << endl;	
+			return count;
+		}
+};
+
+template <typename T>
+class shared
+{
+	public:
+	T* ptr;
+	reference_count* ref;
+
+		shared ():ptr (NULL), ref (new reference_count ())
+		{
+		    ref->add_ref();
+		}
+		shared (T* p):ptr (p), ref (new reference_count ())
+		{
+			if (p != NULL)
+				ref->add_ref ();
+		}
+		shared (const shared<T>& s)
+		{
+			ptr = s.ptr;
+			ref = s.ref;
+			ref->add_ref ();
+		}
+		shared<T>& operator= (const shared<T>& s)
+		{
+		  //  if (*this == s)
+		      //  return NULL;
+			if (this != &s)
+			{
+				ptr = s.ptr;
+				release ();
+				ref = s.ref;
+				ref->add_ref ();
+			}
+			return *this;
+		}
+		T& operator* ()
+		{
+		    return *ptr;  
+		}
+		T* operator-> ()
+		{
+		    return ptr;
+		}
+		void release ()
+		{
+			if (ref->remove_ref () <= 0){
+			    if (ptr != NULL)
+				    delete ptr;
+				delete ref;
+			}
+		}
+		~shared ()
+		{
+			cout << "releasing shared!" << endl;
+			release ();
+		}
+};
+
+int main ()
+{
+// 	adder<int> ad;
+// 	cout << ad.add (1, 4) << endl;	
+	
+// 	adder<int>* p (new adder<int>());
+// 	cout << p->add (2, 4) << endl;	
+// 	delete (p);
+	
+	shared<adder<int>> s1 (new adder <int>());
+	cout << s1->add (4,5) << endl;	
+	
+	shared<adder<int>> s2 = s1;
+	
+	shared<adder<int>> s3;
+	s3 = s2;
+}
+
+
+
+
+
+
+

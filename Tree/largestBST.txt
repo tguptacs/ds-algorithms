@@ -1,0 +1,55 @@
+bool largestBstUtil (Node* root, int& min, int& max, int& size){
+    if (root == NULL) {
+        min = max = 0;
+        return true;
+    }
+    
+	int lmin, lmax, ls = 0;
+	bool lBst = largestBstUtil (root->left, lmin, lmax, ls);
+	
+	int rmin, rmax, rs = 0;
+	bool rBst = largestBstUtil (root->right, rmin, rmax, rs);
+	
+	if(!root->left && !root->right) {
+		min = max = root->data;
+		size += 1;
+		return true;
+	}
+	bool ret = true;
+		
+	if (lBst && rBst) {
+		if(root->left && root->data < lmax)
+			ret = false;
+
+		if(root->right && root->data > rmin)
+			ret = false;
+	}
+	else 
+		ret = false;
+	if (ret)
+	{
+		min = lmax > root->data ? root->data : lmax;
+		max = rmin > root->data ? rmin : root->data;
+		size = ls + rs + 1;
+	}
+	else {
+	    size = ls > rs ? ls : rs;
+		min = max = 0;
+	}
+// 	cout << "root: " << root->data << " min " << min << " max " << max << " ret: " << ret << endl; 
+	return ret;
+}
+
+int largestBst(Node *root)
+{
+	if (root == NULL)
+	    return 0;
+	    
+	bool isBst = true;
+	int min = INT_MIN;
+	int max = INT_MAX;
+	int bstSize = 0;
+	
+	bool ret = largestBstUtil(root, min, max, bstSize);
+	return bstSize;
+}

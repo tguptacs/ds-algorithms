@@ -1,0 +1,34 @@
+Node* join (Node* a, Node* b){
+	if (a == NULL)
+		return b;
+	if (b == NULL)
+		return a;
+	
+	a->left->right = b;
+	b->left->right = a;
+
+	Node* temp = b->left;
+
+	b->left = a->left;
+	a->left = temp;
+	return a;
+}
+
+Node *bTreeToCList(Node *root)
+{
+    if (root == NULL)
+		return NULL;
+	
+	Node* l = bTreeToCList (root->left);
+
+	Node* p = new Node (root->data);
+	p->left = p;
+	p->right = p;
+	
+
+	l = join (l, p);
+	Node* r = bTreeToCList (root->right);
+	l = join (l, r);
+	
+	return l;		
+}

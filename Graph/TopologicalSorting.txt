@@ -1,0 +1,50 @@
+//Topological Sorting/ordering 
+--- Calculating Indegree----
+--- DFS--
+-- Applications: dependent jobs scheduling, Data serialization, Makefiles compilation
+
+
+//V+E
+int FindIndegree (int N, int S, vector<int> adj[]){
+    int degree = 0;
+    for (int i = 0; i < N; ++i){
+        for (int j = 0; j < adj [i].size (); ++j){
+            if (adj [i][j] == S)
+                degree++;
+        }
+    }
+    return degree;
+}
+
+int* topoSort(int V, vector<int> adj[])
+{
+    queue <int> q;
+    map <int, int> m;
+    for (int i = 0; i < V; ++i){
+        int indegree = FindIndegree (V, i, adj);
+        if (indegree == 0)
+            q.push (i);
+        m.insert (make_pair (i, indegree));    
+    }
+    
+	vector <int> v;
+	int cnt = 0;
+    while (!q.empty ()){
+        int s = q.front ();
+ 		v.push_back (s);
+        q.pop ();
+        for (int i = 0; i < adj [s].size (); ++i){
+            int e = adj [s][i];
+            m [e]--;
+            if (m [e] == 0)
+                q.push (e);
+        }
+    }
+    int* arr = new int [v.size ()];
+    for (int i = v.size ()-1; i >=0 ;--i)
+	    arr [i] = v [i];
+	for (int i = 0; i < v.size () ;++i)
+	    cout << arr [i] << " ";
+	    
+    return arr;
+}

@@ -1,0 +1,62 @@
+#include <iostream>
+using namespace std;
+
+int findMaxVal (int n, int kw, int val[], int wt[])
+{
+    int T [n+1][kw+1];
+    
+    for (int i = 0; i <= kw; ++i)
+        T [0][i] = 0;
+    for (int i = 0; i <= n; ++i)
+        T [i][0] = 0;    
+    // int max = 0;
+    for (int i = 1; i <= n; ++i)
+    {
+        int w = wt [i-1];
+        int v = val [i-1];
+        // cout << w << " " << v << endl;
+        for (int j = 1; j <= kw; ++j)
+        {
+            // cout << "j: " << j << endl;
+            if (w > j)
+                T [i][j] = T [i-1][j];
+            else if (w <= j)
+            {
+                int diff = j - w;
+                int temp = v + T [i][diff];
+                T [i][j] = max (T [i-1][j], temp);
+                // if (v > max)
+                //     max = v;
+            }
+            // else
+            // {
+            //     int diff = j - w;
+            //     int temp = v + T [i-1][diff];
+            //     T [i][j] = temp;
+            //     // if (temp > max)
+            //     //     max = temp;
+            // }
+            // cout << "T [i][j]: " << T [i][j] << endl;
+        }
+    }
+    return T [n][kw];
+}
+int main() {
+	int t = 0;
+	cin >> t;
+	while (t-- > 0)
+	{
+	    int n = 0; cin >> n;
+	    int kw = 0; cin >> kw;
+	    
+	    int val [n] = {0}; int wt[n] = {0};
+	    for (int i = 0; i < n; ++i)
+	        cin >> val [i];
+	    for (int i = 0; i < n; ++i)
+	        cin >> wt [i];
+	    
+	    int v = findMaxVal (n, kw, val, wt);
+	    cout << v << endl;
+	}
+	return 0;
+}

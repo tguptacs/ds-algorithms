@@ -1,0 +1,42 @@
+/*This is a function problem.You only need to complete the function given below*/
+/*Complete the code here.
+Node is as follows:
+struct Node
+{
+  int data;
+  Node* left;
+  Node* right;
+};
+*/
+
+int findNode (int node, int in[], int strt, int end){
+    for (int i = strt; i <= end; ++i){
+        if (node == in [i])
+            return i;
+    }
+    return -1;
+}
+
+Node* buildTreeUtil(int in[],int pre[], int inStrt, int inEnd, int& preI)
+{
+    Node* n = new Node (pre [preI]);
+    if (inStrt == inEnd)
+        return n;
+
+    int index = findNode (n->data, in, inStrt, inEnd);
+    if (index == -1)
+        return n;
+
+    if (inStrt < index)
+        n->left = buildTreeUtil (in, pre, inStrt, index-1, ++preI);
+    if (index < inEnd)    
+        n->right = buildTreeUtil (in, pre, index+1, inEnd, ++preI);
+    return n;
+}
+
+Node* buildTree(int in[],int pre[], int inStrt, int inEnd)
+{
+    int preI = 0;
+    Node* n = buildTreeUtil(in, pre, inStrt, inEnd, preI);
+    return n;
+}

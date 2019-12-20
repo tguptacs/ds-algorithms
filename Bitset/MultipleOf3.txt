@@ -1,0 +1,36 @@
+#include <iostream>
+using namespace std;
+
+int isMultipleOf3 (string s){
+    int state = 0;
+    for (int i = 0; i < s.length (); ++i){
+        char c = s [i];
+        switch (state){
+            case 0: if(c == '1')
+                        state = 1;
+                    break;
+            case 1: if (c == '0')
+                        state = 2;
+                    else 
+                        state = 0;
+                    break;
+            case 2: if (c == '0')
+                        state = 1;
+                    break;    
+        }
+    }
+    return state == 0;
+}
+
+int main() {
+	int t = 0;
+	cin >> t;
+	while (t-- > 0){
+	    string s;
+	    cin >> s;
+	    
+	    cout << isMultipleOf3 (s);
+	    cout << endl;
+	}
+	return 0;
+}

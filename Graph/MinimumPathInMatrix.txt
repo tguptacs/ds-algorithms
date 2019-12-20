@@ -1,0 +1,71 @@
+#include <iostream>
+#include <bits/stdc++.h>
+using namespace std;
+
+struct key {
+  int x;
+  int y;
+  int dist;
+  
+  key (int x, int y, int dist)
+  : x(x),
+  y (y),
+  dist (dist)
+  {}
+  
+  bool operator < (const key &l) const{
+      if (dist == l.dist){
+          if (x != l.x)
+            return x < l.x;
+          else
+            return y < l.y;
+      }
+      return dist < l.dist;
+  }
+};
+bool isSafe (int x, int y, int n){
+    if (x < 0 || x >=n || y < 0 || y >=n)
+        return false;
+    return true;    
+}
+int findShortestPath (vector <vector<int>> v, int n){
+    int d[][2] = {{-1,0},{1,0},{0,-1},{0,1}};
+    vector <vector<int>> dis (n, vector <int> (n, INT_MAX));
+    set <key> s;
+    s.insert (key (0,0,0));
+    dis [0][0] = v[0][0];
+    while (!s.empty ()){
+        key e = *(s.begin());
+        s.erase (e);
+        for (int k = 0; k < 4; ++k){
+            int x = e.x + d [k][0];
+            int y = e.y + d [k][1];
+            if (!isSafe (x, y, n))
+                continue;
+        
+            if (dis [x][y] > (dis [e.x][e.y] + v [x][y])){
+                if (dis [x][y] != INT_MAX)
+                    s.erase (s.find (key (x,y,dis[x][y])));
+                dis [x][y] = dis [e.x][e.y] + v [x][y];
+            
+                s.insert (key(x,y,dis [x][y]));
+            }
+        }
+    }
+    return dis [n-1][n-1];
+}
+
+int main() {
+    int test = 0;
+    cin >> test;
+    while (test-- > 0){
+        int n = 0;
+        cin >> n;
+        vector <vector <int>> v (n, vector <int> (n, 0));
+        for (int i = 0; i < n; ++i)
+            for (int j = 0; j < n;++j)
+                cin >> v[i][j];
+        cout << findShortestPath (v, n) << endl;        
+    }
+	return 0;
+}

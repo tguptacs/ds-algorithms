@@ -1,0 +1,23 @@
+#include <iostream>
+using namespace std;
+
+int main() {
+	int t = 0;
+	cin >>t;
+	
+	while (t-- > 0){
+	    long long n = 0;
+	    cin >> n;
+	    long long ret = 0;
+	    int i = 0;
+	    
+	    while (i < 31){
+	        if ((1 << i) & n)
+	            ret |= 1;
+	        ret <<= 1;
+	        i++;
+	    }
+	    cout << ret << endl;
+	}
+	return 0;
+}

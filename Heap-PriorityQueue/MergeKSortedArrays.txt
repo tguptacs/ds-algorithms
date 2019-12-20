@@ -1,0 +1,40 @@
+/*This is a function problem.You only need to complete the function given below*/
+// your task is tocomplete this function
+// function should return an pointer to output array int*
+struct key{
+	int ele;
+	int i;
+	int j;
+	
+	key (int ele, int i, int j)
+	: ele (ele), i (i), j (j)
+	{}
+	bool operator < (const key &k) const{
+		return ele > k.ele;
+	}
+};
+
+int *mergeKArrays(int arr[][N], int k)
+{
+ 	priority_queue <key> h;
+	
+ 	for (int i = 0;i<k;i++){
+ 		h.push (key (arr [i] [0], i, 1));
+ 	}
+ 	int count = 0;
+ 	while (count < k*k){
+ 		key ke = h.top ();
+		cout << ke.ele << " ";
+ 		h.pop ();
+
+ 		if (ke.j < k){
+     	    key n (arr [ke.i][ke.j], ke.i, ke.j+1);
+			
+ 			h.push (n);
+ 		}
+ 		else{
+ 			h.push (key (INT_MAX, ke.i, ke.j));
+ 		}
+ 		count++;
+ 	}
+}

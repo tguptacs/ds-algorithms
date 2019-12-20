@@ -1,0 +1,70 @@
+#include <iostream>
+#include <bits/stdc++.h>
+using namespace std;
+bool compare (pair <pair<string, string>, int> p1, pair <pair<string, string>, int> p2)
+{
+	if (p1.first.first == p2.first.first)
+		return p1.first.second < p2.first.second;
+	return p1.first.first < p2.first.first;	
+}
+
+vector<string> logFile (int fileSize, vector <string> logLines)
+{
+	vector<string> result;
+	
+	//<<string, string>, int>
+	vector<pair <pair<string, string>, int>> stringLines;
+	vector<string> intLines;
+	
+	for (int i = 0; i < fileSize; ++i)
+	{
+		string s = logLines [i];
+		size_t found = s.find (' ');
+		if (found != string::npos)
+		{
+			string id = s.substr (0, found);
+			string temp = s.substr (found+1);
+			if (isalpha (temp [0]))
+			{
+				pair <string, string> p = make_pair (temp, id);
+				stringLines.push_back (make_pair (p, i));
+			}
+			else
+			{
+				intLines.push_back (s);
+			}
+		}
+	}
+	sort (stringLines.begin (), stringLines.end (), compare);
+	
+	for (int i=0; i<stringLines.size (); ++i){
+		pair <pair<string, string>, int> p = stringLines [i];
+		
+ 		result.push_back (logLines [p.second]);
+	}
+	
+	for (int i=0; i<intLines.size (); ++i){
+		result.push_back (intLines [i]);
+	}
+	return result;
+}
+int main() {
+	int size = 5;
+	vector <string> logLines;// (size);
+	logLines.push_back ("a1 9 2 3 1");
+	logLines.push_back ("g1 act car");
+	logLines.push_back ("zo4 4 7");
+	logLines.push_back ("ab1 off key dog");
+	logLines.push_back ("a8 act zoo");
+	cout << "original: " << logLines.size () << endl;
+	for (int i = 0; i < size; ++i){
+	    cout << logLines [i] << endl;
+	}
+	
+	vector<string> result = logFile (size, logLines);
+	cout << "\nresult: " << result.size () << endl;
+	for (int i = 0; i < result.size (); ++i){
+	    cout << result [i] << endl;
+	}
+	return 0;
+}

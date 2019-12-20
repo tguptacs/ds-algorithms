@@ -1,0 +1,37 @@
+/*You are required to complete this function*/
+int getLevelDiff(Node *root)
+{
+   if (root == NULL)
+    return 0;
+    
+    queue <Node*> q;
+    q.push (root);
+    q.push (NULL);
+    bool d = false;
+    int sum = 0;
+    while (!q.empty ()){
+        Node* t = q.front ();
+        q.pop ();
+        
+        if (t == NULL){
+            if (q.empty ())
+                break;
+            d = !d;    
+            q.push (NULL); 
+        }
+        else {
+            if (!d){
+                sum += t->data;
+            }
+            else {
+                sum -= t->data;
+            }
+            
+            if (t->left)
+                q.push (t->left);
+            if (t->right)
+                q.push (t->right);
+        }
+    }
+    return sum;
+}

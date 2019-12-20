@@ -1,0 +1,28 @@
+// function should print the topView of the binary tree
+void topView(struct Node *root)
+{
+   map <int, int> m;
+   queue <pair<Node*, int> > q;
+   pair <Node*, int> p (root, 0);
+   q.push (p);
+   while (!q.empty ()){
+       pair <Node*, int> p = q.front ();
+       q.pop ();
+       Node* n = p.first;
+       int i = p.second;
+       if (m.find (i) == m.end ())
+            m [i] = n->data;
+      if (n->left){
+            pair <Node*, int> p (n->left, i-1);
+            q.push (p);
+      }
+      if (n->right){
+            pair <Node*, int> p (n->right, i+1);
+            q.push (p);
+      }
+   }
+   
+   for (map <int, int>::iterator it = m.begin (); it != m.end (); ++it){
+       cout << it->second << " ";
+   }
+}

@@ -1,0 +1,56 @@
+#include <iostream>
+#include <bits/stdc++.h>
+using namespace std;
+
+int getMedian (int arr1 [], int arr2[], int maxa1, int mina1, 
+                int maxa2, int mina2, int size) {
+    if ((size % 2) == 0){
+        return (max (maxa1, maxa2) + min (mina1, mina2))/2;
+    }
+    else
+        return max (maxa1, maxa2);
+}
+
+int findMedian (int arr1 [], int arr2[],int m, int n){
+    if (m > n){
+        return findMedian (arr2, arr1, n, m);
+    }    
+    
+    int l = 0;
+    int h = m;
+    int mid = 0;
+    int size = m + n;
+    while (l <= h){
+        int px = (l + h)/2;
+        int py = (m + n + 1)/2 - px;
+        
+        int maxa1 = (px == 0) ? INT_MIN : arr1 [px - 1];
+        int mina1 = (px == n) ? INT_MAX : arr1 [px];
+        
+        int maxa2 = (py == 0) ? INT_MIN : arr2 [py - 1];
+        int mina2 = (py == n) ? INT_MAX : arr2 [py];
+        
+        if (maxa1 < mina2 && maxa2 < mina1){
+            cout << "maxa1: " << maxa1 << " mina1: " << mina1 << endl;
+            cout << "maxa2: " << maxa2 << " mina2: " << mina2 << endl;
+            return getMedian (arr1, arr2, maxa1, mina1, maxa2, mina2, size);
+        }
+        else if (maxa1 > mina2)
+            l = px - 1;
+        else
+            l = px + 1;
+    }
+    return -1;
+}
+
+int main()
+{ 
+    // int a[] = {900}; 
+    // int b[] = { 10,13,14}; 
+    int a[] = { 1, 12, 15, 26, 38 }; 
+    int b[] = { 2, 13, 24 }; 
+    int n = sizeof(a) / sizeof(int); 
+    int m = sizeof(b) / sizeof(int); 
+    cout << findMedian (a, b, n, m);
+	return 0;
+}

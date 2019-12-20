@@ -1,0 +1,30 @@
+#include <iostream>
+using namespace std;
+
+int FindTotalStepsCount (int n) {
+    if (n <= 0)
+        return 0;
+    int ret = 0;
+    
+    int a[n] = {0};
+    a [0] = 1;
+    a [1] = 2;
+    a [2] = 4;
+    
+    for (int i = 3; i < n; ++i){
+        a [i] = a [i-1] + a [i-2] + a [i-3];
+    }
+    return a [n-1];
+}
+
+int main() {
+	int t = 0;
+	cin >> t;
+	while (t-- > 0){
+	    int n = 0;
+	    cin >> n;
+	    
+	    cout << FindTotalStepsCount (n) << endl;
+	}
+	return 0;
+}

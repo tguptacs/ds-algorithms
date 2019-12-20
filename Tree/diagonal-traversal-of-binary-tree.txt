@@ -1,0 +1,37 @@
+//Input : Root of below tree
+//unnamed
+//http://d1hyf4ir1gqw6c.cloudfront.net//wp-content/uploads/unnamed1.png
+//Output : 
+//Diagonal Traversal of binary tree : 
+// 8 10 14 3 6 7 13 1 4
+ 
+ /*This is a function problem.You only need to complete the function given below*/
+/* A binary tree node
+struct Node
+{
+    int data;
+    Node* left, * right;
+}; */
+
+void store(Node* root, int d, map <int, vector<int>> &m){
+    if (root == NULL)
+        return;
+    m [d].push_back (root->data);
+    store (root->left, d+1, m);
+    store (root->right, d, m);
+}
+
+void printDiagonal (map <int, vector<int>> m){
+    for (map <int, vector<int>>::iterator it = m.begin (); it != m.end (); ++it){
+        vector <int> s = it->second;
+        for (vector<int>::iterator i = s.begin (); i != s.end (); ++i)
+            cout << *i << " ";
+    }
+}
+
+void diagonalPrint(Node *root)
+{
+   map <int, vector<int>> m;
+   store (root, 0, m);
+   printDiagonal (m);
+}

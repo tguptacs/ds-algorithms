@@ -1,0 +1,36 @@
+#include <iostream>
+using namespace std;
+#include <bits/stdc++.h>
+
+long long findMaxProduct (long long N[], long long M[], int n, int m)
+{
+    long long DP [m+1][n+1];
+    memset(DP, 0, sizeof(DP)); 
+
+    for (int i = 1; i <= m; ++i)
+    {
+        for (int j = i; j <= n; ++j)
+        {
+            DP [i][j] = max ((DP [i-1][j-1] + M [i-1] * N [j-1]), DP [i][j-1]);
+        }
+    }
+    return DP [m][n];
+}
+int main() {
+	int t = 0;
+	cin >> t;
+	while (t-- > 0)
+	{
+	    int n, m = 0;
+	    cin >> n >> m;
+	    long long N [n] = {0};
+	    long long M [n] = {0};
+	    for (int i = 0; i < n; ++i) cin >> N [i];
+	    for (int i = 0; i < m; ++i) cin >> M [i];
+	    
+	    
+	    long long p = findMaxProduct (N, M, n, m);
+	    cout << p << endl;
+	}
+	return 0;
+}

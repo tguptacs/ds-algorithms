@@ -1,0 +1,28 @@
+/* The below function should return the node which is 
+inorder successor of given node x. */
+
+Node * inOrderSuccessorUtil(Node *root, Node* &prev, Node* x){
+    if (root == NULL){
+        return NULL;
+    }
+    Node* t = inOrderSuccessorUtil (root->left, prev, x);
+    if (t)
+        return t;
+    if (prev == x)
+        return root;
+    prev = root;
+    t = inOrderSuccessorUtil (root->right, prev, x);
+    if (t)
+        return t;
+    return NULL;
+}
+
+
+Node * inOrderSuccessor(Node *root, Node *x)
+{
+    if (root == NULL){
+        return NULL;
+    }
+    Node* temp = new Node (-1);
+    return inOrderSuccessorUtil (root, temp, x);
+}

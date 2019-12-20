@@ -1,0 +1,20 @@
+void printVerticalSum(Node *root, map<int, int>& m, int index){
+    if (root == NULL)
+        return;
+    if (m.find (index) == m.end ())
+        m [index] = root->data;
+    else    
+        m [index] += root->data;
+    
+    printVerticalSum (root->left, m, index-1);
+    printVerticalSum (root->right, m, index+1);
+}
+
+void printVertical(Node *root)
+{
+    map<int, int> m;
+    printVerticalSum (root, m, 0);
+    
+    for (map<int, int>::iterator it = m.begin (); it!=m.end (); ++it)
+        cout << it->second << " ";
+}

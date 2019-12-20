@@ -1,0 +1,72 @@
+#include <iostream>
+#include <bits/stdc++.h>
+using namespace std;
+
+int PushInHeap (priority_queue <int> &max, 
+				priority_queue <int, vector<int>, greater<int>> &min, 
+				int x)
+{
+	//Balanced Heaps (Max, Min)
+    if (max.size () == min.size ())
+    {
+        if (max.size () > 0){
+            if (x < max.top ())
+                max.push (x);
+            else
+                min.push (x);
+        }
+        else
+            max.push (x);
+    }
+	//UnBalanced Heaps (Max > Min)
+    else if (max.size () > min.size ()){
+        if (x < max.top ())
+        {
+            min.push (max.top ());
+            max.pop ();
+            max.push (x);
+        }
+        else
+            min.push (x);
+    }
+	//UnBalanced Heaps (Min > Max)
+    else{
+        if (x > min.top ()){
+            max.push (min.top ());
+            min.pop ();
+            min.push (x);
+        }
+        else
+            max.push (x);
+    }
+}
+
+int FindMedian (priority_queue <int> &max, 
+				priority_queue <int, vector<int>, greater<int>> &min)
+{
+	if (max.size () == min.size ())
+		return (max.top () + min.top ())/2;
+	
+	if (max.size () > min.size ())
+		return max.top ();
+	else
+		return min.top ();
+}
+				
+int main() {
+	int test = 0;
+	cin >> test;
+	
+	priority_queue <int> max;
+	priority_queue <int, vector<int>, greater<int>> min;
+	
+	while (test-- > 0){
+		int x = 0;
+		cin >> x;
+		
+		PushInHeap (max, min, x);
+		cout << FindMedian (max, min) << endl;
+	}
+	
+	return 0;
+}
