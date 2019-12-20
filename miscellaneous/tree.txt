@@ -1,0 +1,95 @@
+#include <iostream>
+#include <bits/stdc++.h>
+using namespace std;
+
+typedef struct node{
+    int data;
+    struct node* left;
+    struct node* right;
+}Node;
+Node *root = NULL;
+
+typedef enum{
+    LEFT=0,
+    RIGHT,
+    NONE
+}Side;
+
+Node* findNode (Node* root, int source);
+void addNode (int source, Side s, int number){
+    Node* temp = new Node ();
+    temp->data = number;
+    temp->left = NULL;
+    temp->right = NULL;
+    if (source == 0){
+        root = temp;
+    }
+    else
+    {
+        Node *t = findNode (root, source);
+        if (s == LEFT)
+            t->left = temp;
+        else
+            t->right = temp;
+    }
+}
+
+Node* findNode (Node* root, int source){
+    if (source == 0)
+        return NULL;
+    if (root == NULL)
+        return NULL;
+        
+    if (root->data == source)
+        return root;
+    Node* temp = root;
+
+    temp = findNode (root->left, source);
+    if (temp == NULL)
+        return findNode (root->right, source);
+            
+    return temp;
+}
+
+void printTreePostOrder (Node* root){
+    if (root == NULL)
+        return;
+        
+    stack<Node*> s;
+    s.push (root);
+    Node* c = root;
+    
+    while (!s.empty()){
+        c = s.top ();
+cout << "c->data " << c->data << endl;
+        if (c->left != NULL){
+            Node* t = c->left;
+            cout << "c->left " << t->data << endl;
+            s.push (t);
+        }
+        if (c->right != NULL){
+            Node*t = c->right;
+            cout << "c->right " << t->data << endl;
+            s.push (t);
+        }else{        
+            cout << c->data << " ";
+            s.pop ();        
+        }
+    }
+}
+
+int main ()
+{
+    addNode (0, NONE, 1);
+    addNode (1, LEFT, 2);
+	addNode (1, RIGHT, 3);
+// 	addNode (2, RIGHT, 4);
+// 	addNode (3, RIGHT, 5);
+// 	addNode (4, RIGHT, 8);
+// 	addNode (5, LEFT, 6);
+// 	addNode (5, RIGHT, 7);
+	printTreePostOrder (root);
+	return 0;
+}
+
+

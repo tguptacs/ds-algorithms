@@ -1,0 +1,28 @@
+// Go to middle of list, reverse the list from mid node
+// start comparing the nodes from start and reversed list
+
+bool isPalindrome(Node *head)
+{
+    Node* t = head;
+    Node* fast = head;
+    while (fast != NULL && fast->next){
+        fast = fast->next->next;
+        t = t->next;
+    }
+    Node* r = NULL;
+    while (t != NULL){
+        Node* temp = t->next;
+        t->next = r;
+        r = t;
+        t = temp;
+    }
+    if (r == NULL)
+        return false;
+    while (head != NULL && r != NULL){
+        if (head->data != r->data)
+            return false;
+        head = head->next;
+        r = r->next;
+    }
+    return true;
+}

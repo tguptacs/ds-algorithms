@@ -1,0 +1,87 @@
+Longest Common Increasing Sequence
+Perulation of (characters too be typed) using Phone Digits
+Histogram (Largets Rectangle)
+Find Number for which pow(x,y) > pow(y,x)
+check-if-any-permutation-of-a-large-number-is-divisible-by-8 (Maintain HashTable, if 3 digit number is divisible by 8, then yes)
+MedianOf2SortedArrays
+randomized quicksort
+Count subsequences of type a^i b^j c^k (maintain count of subsequences)
+count-possible-paths-top-left-bottom-right-nxm-matrix (use dp: a [i][j] = a [i][j-1] + a[i-1][j] or dp [j] += dp [j-1])
+segment-tree-set-1-range-minimum-query
+https://www.geeksforgeeks.org/efficiently-implement-k-stacks-single-array/
+Dynamic Programming
+  Egg Droppping, find attempts to find the floor, from which egg doesn't break
+  Find Max Dot product
+  LCIS (Longest Common Increasing Sequence)
+
+void postOrder(Node* root)
+{
+  if (root == NULL)
+    return;
+    
+  stack <Node*> s;
+  while (root != NULL || !s.empty()){
+        while (root != NULL){
+            if (root->right)
+                s.push (root->right);
+            s.push (root);
+            root = root->left;
+        }
+        Node* t = s.top ();
+        s.pop ();
+        
+        if (t->right != NULL && !s.empty() && t->right == s.top()){
+            Node* temp = s.top ();
+            s.pop ();
+            s.push (t);
+            root = temp;
+        }
+        else {
+            cout << t->data << " ";
+        }
+  }
+}
+
+void inOrder(Node* root)
+{
+  if (root == NULL)
+    return;
+    
+  stack <Node*> s;
+  while (root != NULL || !s.empty()){
+        while (root != NULL){
+            if (root->right)
+                s.push (root->right);
+            s.push (root);
+            root = root->left;
+        }
+        Node* t = s.top ();
+        s.pop ();
+        cout << t->data << " ";
+        
+        if (t->right && !s.empty () && t->right == s.top()){
+            s.pop ();
+            root = t->right;    
+        }
+  }
+}
+
+void preOrder(Node* root)
+{
+  if (root == NULL)
+    return;
+    
+  stack <Node*> s;
+  while (root != NULL){
+      while (root != NULL) {
+          cout << root->data << " ";
+          if (root->right)
+            s.push (root->right);
+          root = root->left;    
+      }
+      if (s.empty ())
+        break;
+      root = s.top ();
+      s.pop ();
+  }
+}

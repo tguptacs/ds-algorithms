@@ -1,0 +1,54 @@
+#include <iostream>
+#include <bits/stdc++.h>
+using namespace std;
+
+int findSmallest (int arr[], int n){
+    int number = arr [0];
+    
+    for (int i = 1; i < n; ++i){
+        if (arr [i] < number)
+            number = arr [i];
+    }
+    return number;
+}
+
+//Greatest Common Divisor													
+int findGCD (int arr [], int n){
+	//Find Smallest Number
+    int smallest = findSmallest (arr, n);
+    
+	//Find Square Root of number (greatest divisible is square root) for 100 ie 10 * 10
+	//if it was 11 * 9 than we must have checked 9 also before 10. So the loop from 1 to 10 will cover all the possibilities.
+    int sq = sqrt (smallest);
+    
+	//Find all the factors (like 2*2*3)
+	queue <int> q; 
+    for (int i = 2; i < sq; ++i){
+        while (smallest % i == 0 && smallest >= 0){
+            q.push (i);
+            smallest = smallest / i;
+        }
+    }
+    
+	//Finally, check the factors if they divide all the numbers
+	//Also, keep multiplying the factor, if that works for all the numbers
+    int factor = 1;
+    while (!q.empty ()){
+        factor *= q.front ();
+        for (int i = 0; i < n; ++i){
+            if (arr [i] % factor != 0){
+                factor /= q.front ();
+                break;
+            }
+        }
+        q.pop ();
+    }
+    return factor;
+}
+
+int main() {
+    int arr [3] = {24, 36, 48};
+    cout << "GCD: " << findGCD (arr, sizeof (arr)/sizeof (arr[0])) << endl;
+    
+	return 0;
+}

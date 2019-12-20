@@ -1,0 +1,104 @@
+#include <iostream>
+using namespace std;
+
+typedef struct node{
+	int data;
+	struct node* next;
+	
+	node (int data)
+	: data (data),
+	  next (NULL)
+	{}
+}Node;
+
+Node* createList (int arr[], int size){
+	Node* head = new Node (arr [0]);
+	Node *t = head;
+	for (int i = 1; i < size; ++i){
+		Node* temp = new Node (arr [i]);
+		t->next = temp;
+		t = temp;
+	}
+	
+	return head;
+}
+
+void printList (Node* head){
+	Node* t = head;
+	
+	while (t != NULL){
+		cout << t->data << " ";
+		t = t->next;
+	}
+	cout << endl;
+}
+
+Node* addNode (Node* n1, Node* n2, int* c){
+	int sum = 0;
+	if (n1 != NULL)
+		sum += n1->data;
+	if (n2 != NULL)
+		sum += n2->data;
+	sum += *c;
+	*c = sum / 10;
+	sum = sum % 10;
+	
+	return new Node (sum);
+}
+
+Node* reverse (Node* head){
+	Node *r = NULL;
+	while (head != NULL){
+		Node* temp = head->next;
+		head->next = r;
+		r = head;
+		head = temp;
+	}
+	return r;
+}
+
+Node* addList (Node* h1, Node* h2){
+	if (h1 == NULL && h2 == NULL)
+		return NULL;
+	h1 = reverse (h1);	
+	h2 = reverse (h2);	
+		
+	Node* t1 = h1;
+	Node* t2 = h2;
+	int carry = 0;
+	
+	Node* result = new Node (0);
+	Node* r = result;
+	while (t1 || t2 || carry){
+		r->next = addNode (t1, t2, &carry);
+		r = r->next;
+		if (t1)
+		    t1 = t1->next;
+	    if (t2)	
+		    t2 = t2->next;
+	}
+	h1 = reverse (h1);
+	h2 = reverse (h2);
+	r = result->next;
+	result->next = NULL; 
+	free (result);
+	return reverse(r);
+}
+
+int main (){
+	int n = 3;
+	int arr[n] = {0};
+	for (int i = 0; i < n; ++i) arr [i] = i+1; 
+	Node* head1 = createList (arr, sizeof(arr)/sizeof(arr[0]));
+	
+	for (int i = 0; i < n; ++i) arr [i] = i*20+1; 
+	Node* head2 = createList (arr, sizeof(arr)/sizeof(arr[0]));
+	
+	printList (head1);
+	printList (head2);
+	
+	Node* r = addList (head1, head2);
+	printList (head1);
+	printList (head2);
+	printList (r);
+}

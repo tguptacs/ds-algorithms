@@ -1,0 +1,49 @@
+/*This is a function problem.You only need to complete the function given below*/
+/* Node structure  used in the program
+
+Q. You have to flatten the linked list to a single linked list which is sorted.
+
+struct Node{
+	int data;
+	struct Node * next;
+	struct Node * bottom ;
+}; */
+
+	   5 -> 10 -> 19 -> 28
+       |    |     |     |
+       V    V     V     V
+       7    20    22    35
+       |          |     |
+       V          V     V
+       8          50    40
+       |                |
+       V                V
+       30               45
+
+Node* merge (Node* a, Node* b){
+	if (a == NULL)
+		return b;
+	if (b == NULL)
+		return a;
+	Node* r;	
+	if (a->data < b->data){
+		r = a;
+		r->bottom = merge (a->bottom, b);
+	}
+	else{
+		r = b;
+		r->bottom = merge (a, b->bottom);
+	}
+	return r;
+}
+/*  Function which returns the  root of 
+    the flattened linked list. */
+Node *flatten(Node *root)
+{
+   if (root == NULL)
+	return NULL;
+   if (root->next == NULL)
+	return root;
+	
+	return merge (root, flatten (root->next));
+}

@@ -1,0 +1,70 @@
+#include <iostream>
+using namespace std;
+
+int LeftChild (int i, int n){
+    i = i*2 + 1;
+    if (i < 0 || i >= n)
+        return -1;
+    return i;    
+}
+
+int RightChild (int i, int n){
+    i = i*2 + 2;
+    if (i < 0 || i >= n)
+        return -1;
+    return i;    
+}
+
+void swap (int &a, int &b){
+    int temp = a;
+    a = b;
+    b = temp;
+}
+
+void Heapify (int arr[], int n, int i){
+    if (i < 0 || i >=n)
+        return;
+    int l = LeftChild (i, n);
+    int r = RightChild (i, n);
+    int max = i;
+    if (l != -1 && arr [l] > arr [i])
+        max = l;
+    if (r != -1 && arr [r] > arr [max])
+        max = r;
+    if (max != i){
+        swap (arr [i], arr [max]);
+        Heapify (arr, n, max);
+    }    
+}
+
+void BuildHeap (int arr[], int n){
+    for (int i = (n-1)/2; i >=0; --i)
+        Heapify (arr, n, i);
+}
+
+void HeapSort (int arr [], int n){
+    BuildHeap (arr, n);
+    
+    for (int i = n-1; i >=0 ; --i){
+        swap (arr [i], arr [0]);
+        Heapify (arr, i, 0);
+    }
+}
+
+void PrintArray (int arr [], int n){
+    for (int i = 0; i < n; ++i)
+        cout << arr [i] << " ";
+    cout << endl;    
+}
+
+int main() {
+    int n = 10;
+    int arr [n] = {10, 9, 2, 7, 1, 5, 4, 3, 8, 6};
+    cout << "Original: " << endl;
+    PrintArray (arr, n);
+    BuildHeap (arr, n);
+    // PrintArray (arr, n);
+    HeapSort (arr, n);
+    PrintArray (arr, n);
+	return 0;
+}

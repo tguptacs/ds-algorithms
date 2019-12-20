@@ -1,0 +1,41 @@
+//Implement it using minheap
+
+/*This is a function problem.You only need to complete the function given below*/
+/*Linked list Node structure
+struct Node
+{
+    int data;
+    Node* next;
+};*/ 
+/* arr[] is an array of pointers to heads of linked lists
+  and N is size of arr[]  */
+  
+Node* merge (Node* a, Node* b){
+    if (a == NULL)
+        return b;
+    if (b == NULL)
+        return a;
+    
+    Node* temp;
+    if (a->data < b->data)
+    {
+        temp = a;
+        temp->next = merge (a->next, b);
+    }
+    else{
+        temp = b;
+        temp->next = merge (a, b->next);
+    }
+    return temp;
+}  
+Node * mergeKLists(Node *arr[], int N)
+{
+    int i = N-1;
+    Node* ret = NULL;
+    while (i >= 0){
+        Node* temp = merge (arr [i], ret);
+        ret = temp;
+        i--;
+    }
+    return ret;
+}

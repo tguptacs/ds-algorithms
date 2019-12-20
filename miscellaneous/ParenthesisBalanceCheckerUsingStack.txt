@@ -1,0 +1,54 @@
+#include <iostream>
+#include <bits/stdc++.h>
+using namespace std;
+
+bool isMatched (char ch, char top){
+    if ((ch == '}'
+        && top == '{')
+       || (ch == ')'
+            && top == '(')
+       || (ch == ']'
+            && top == '['))
+        return true;
+    return false;
+}
+
+bool isBalanced (string exp){
+    int len = exp.length ();
+    int i = 0;
+    stack <char> s; //problem arises, when used pointer char*
+    while (i < len){
+        char ch = exp[i];
+        if (ch == '{'
+            || ch == '('
+            || ch == '['){
+            s.push (ch);        
+        }
+        else{
+            if (i == 0) // check first character if that's closing })]
+                return false;
+            if (!s.empty ()){
+                char c = s.top ();
+                s.pop ();
+                if (! isMatched (ch, c)) // Match the current ) and popped ( 
+                    return false;
+            }
+        }
+        i++;
+    }
+    if (!s.empty ())
+        return false;
+    return true;
+}
+int main() {
+	
+	int test = 0;
+	cin >> test;
+	
+	while (test-- > 0){
+	   string exp;
+	   cin >> exp;
+	   cout << (isBalanced (exp) ? "balanced" : "not balanced") << endl;
+	}
+	return 0;
+}

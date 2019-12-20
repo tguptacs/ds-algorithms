@@ -1,0 +1,37 @@
+struct node* reverseList (struct node *head){
+	struct node *t = head;
+	struct node *r = NULL;
+	while (t != NULL){
+		struct node *temp = t->next;
+		t->next = r;
+		r = t;
+		t = temp;
+	}
+	return r;
+}
+
+struct node* findKthNode (struct node *head, int k){
+	int i = 0;
+	struct node *c = head;
+	while (i < (k-1) && c != NULL){
+		c = c->next;
+		i++;
+	}
+	return c;
+}
+struct node *reverse (struct node *head, int k)
+{ 
+  if (head == NULL || k == 0)
+	return NULL;
+  if (head->next == NULL)
+    return head;
+  struct node *temp = findKthNode (head, k);
+  struct node* temp2 = NULL;
+  if (temp){
+    temp2 = temp->next;
+    temp->next = NULL;
+  }
+  struct node *r = reverseList (head);
+  head->next = reverse (temp2, k);
+  return r;
+}

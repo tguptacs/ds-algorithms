@@ -1,0 +1,41 @@
+/*This is a function problem.You only need to complete the function given below*/
+/*The structure of the class is
+struct MinHeap
+{
+    int *harr;
+    int capacity, heap_size;
+    MinHeap(int cap=100) {heap_size = 0; capacity = cap; harr = new int[cap];}
+    int extractMin();
+    void deleteKey(int i);
+    void insertKey(int k);
+};*/
+// You need to write code for below three functions
+    
+/* Removes min element from min heap and returns it */
+int MinHeap ::  extractMin()
+{
+    if (heap_size <= 0)
+        return -1;
+    int data = harr [0];
+    harr [0] = harr [heap_size-1];
+    heap_size--;
+    MinHeapify (0);
+    return data;    
+}
+/* Removes element from position x in the min heap  */
+void MinHeap :: deleteKey(int i)
+{
+    if (i < 0 || i >= heap_size)
+        return;
+    harr [i] = harr [heap_size-1];
+    heap_size--;
+    MinHeapify (i);
+}
+/* Inserts an element at position x into the min heap*/
+void MinHeap ::insertKey(int k)
+{
+   harr [heap_size++] = k;
+   for (int i = (heap_size-1)/2; i>=0;i--)
+        MinHeapify (i);
+   
+}

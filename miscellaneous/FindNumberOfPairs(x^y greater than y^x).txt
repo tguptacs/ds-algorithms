@@ -1,0 +1,75 @@
+#include <iostream>
+#include <bits/stdc++.h>
+using namespace std;
+
+
+// int upperBound (int y[], int size_y, int x){
+// 	for (int i = 0; i < size_y; ++i){
+// 		if (y [i] > x)
+// 			return i;
+// 	}
+// }
+int* upperBound (int y[], int size_y, int x){
+	for (int i = 0; i < size_y; ++i){
+		if (y [i] > x)
+			return y + i;
+	}
+}
+
+int findCount (int x, int y[], int size_y, int numY[]){
+	if (x == 0)
+		return 0;
+	if (x == 1)
+		return numY [0];
+		
+// 	int count = size_y - upperBound (y, size_y, x);
+	int* idx = upper_bound(y, y + size_y, x); 
+    int count = (y + size_y) - idx; 
+    
+	if (x == 2)
+		count -= (numY [3] + numY [4]);
+	if (x == 3)
+		count += numY [2];
+		
+	count += (numY [0] + numY [1]);	
+	return count;	
+}
+
+int findPair (int x[], int y[], int size_x, int size_y)
+{
+	sort (y, y + size_y);	
+	int pairs = 0;
+	int numY [5] = {0};
+	for (int i = 0; i < size_y; ++i)
+		if (y [i] < 5)
+			numY [y[i]]++;
+	
+	for (int i = 0; i < size_x; ++i){
+		pairs += findCount (x [i], y, size_y, numY);
+	}
+	return pairs;
+}
+
+int main ()
+{
+	int test = 0;
+	cin >> test;
+	
+	while (test > 0){
+		int size_x = 0;
+		int size_y = 0;
+		cin >> size_x;
+		cin >> size_y;
+		
+		int x_arr [size_x] = {0};
+		for (int i = 0; i < size_x; ++i) cin >> x_arr [i];
+		
+		int y_arr [size_y] = {0};
+		for (int i = 0; i < size_y; ++i) cin >> y_arr [i];
+		
+		cout << findPair (x_arr, y_arr, size_x, size_y);
+	    cout << endl;
+		test --;
+	}
+	return 0;
+}
