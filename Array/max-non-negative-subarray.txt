@@ -1,0 +1,54 @@
+vector<int> Solution::maxset(vector<int> &A) {
+    long long sum = INT_MIN;
+    int x = 0; int y = 0;
+    long long c = 0; int flag = 0;
+    unordered_map <long long, pair<int, int>> m;
+    for (int i = 0; i < A.size (); ++i)
+    {
+        if (flag == 0)
+            x = i;
+        if (A [i] >= 0)
+        {
+            flag = 1;
+            c += A [i];
+            
+            y = i;
+            int len = (y - x) + 1;
+            if (c > sum)
+            {
+                sum = c;
+                pair <int, int> p (x, y);
+                pair<long long, pair<int, int>> pr (sum, p);
+                m.insert (pr);
+            }
+            else if (c == sum)
+            {
+                if (m.find (sum) != m.end ())
+                {
+                  pair<int, int> p = m [sum];    
+                  int prevLen = (p.second - p.first) + 1;
+                  if (len > prevLen)
+                  {
+                      m [sum] = pair<int, int> (x, y);
+                  }
+                  else if (len == prevLen && x < p.first)
+                  {
+                      m [sum] = pair<int, int> (x, y);
+                  }
+                }
+            }
+        }
+        else
+        {
+            flag = 0;
+            c = 0;
+        }
+    }
+    vector<int> v;
+    if (sum >= 0)
+    {
+        pair <int, int> p = m [sum];
+        v.insert (v.begin (), A.begin() + p.first, A.begin () + p.second+1);
+    }
+    return v;
+}

@@ -1,0 +1,24 @@
+vector<vector<int> > Solution::generateMatrix(int A) {
+    int nr = A;
+    int nc = A;
+    int r = 0; int c = 0;
+    int num = 1;
+    vector <vector<int>> v (A, vector<int> (A));
+
+    while (r < nr && c < nc && r >= 0 && c >= 0)
+    {
+        for (int i = c; i < nc; ++i)
+            v [r][i] = num++;
+        r += 1;
+        for (int j = r; j < nr; ++j)
+            v [j][nc-1] = num++;
+        nc -= 1;
+        for (int i = nc - 1; i >= c; --i)
+            v [nr-1][i] = num++;
+        nr -= 1;
+        for (int j = nr-1; j >= r; --j)
+            v [j][c] = num++;
+        c += 1;    
+    }
+    return v;
+}
