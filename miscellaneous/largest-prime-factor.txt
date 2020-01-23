@@ -1,0 +1,40 @@
+#include <iostream>
+#include <bits/stdc++.h>
+using namespace std;
+
+int largestPrimeFactor (int x)
+{
+    int n = x;
+    while (x % 2 == 0)
+    {
+        x = x/2;
+    }
+    int max = 1;
+    for (int i = 3; i <= sqrt(n); i  += 2)
+    {
+        while (x % i == 0)
+        {
+            x = x/i;
+            if (i > max)
+                max = i;
+        }
+    }
+    if (x > 2 && x > max)
+    {
+        max = x;
+    }
+    return max;
+}
+
+int main() {
+	int n = 0;
+	cin >> n;
+	while (n-- > 0)
+	{
+	    int x = 0;
+	    cin >> x;
+	    cout << largestPrimeFactor (x);
+	    cout << endl;
+	}
+	return 0;
+}
