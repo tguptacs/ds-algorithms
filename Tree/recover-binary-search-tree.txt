@@ -1,0 +1,50 @@
+/**
+ * Definition for binary tree
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+ 
+void recover(TreeNode* A, TreeNode* &c, TreeNode* &p, TreeNode* &r, TreeNode* &n)
+{
+    if(A==NULL)
+        return;
+    recover(A->left, c, p, r, n);
+    if(c)
+    {
+        if(A->val < c->val){
+            if(!p)
+            {
+                p = c;
+                r = A;
+            }
+            else
+            {
+                n = A;
+            }
+        }
+    }
+    c = A;
+    recover(A->right, c, p, r, n);
+}
+vector<int> Solution::recoverTree(TreeNode* A) {
+    vector<int> v;
+    if(A==NULL)
+        return v;
+    TreeNode* c = NULL;
+    TreeNode* p = NULL;
+    TreeNode* n = NULL;
+    TreeNode* r = NULL;
+    recover(A, c, p, r, n);
+    if(p)
+        v.push_back(p->val);
+    if(n)
+        v.push_back(n->val);
+    else if(r)
+        v.push_back(r->val);
+    sort(v.begin(), v.end());    
+    return v;    
+}

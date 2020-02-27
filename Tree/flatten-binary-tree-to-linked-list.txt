@@ -1,0 +1,33 @@
+/**
+ * Definition for binary tree
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+
+TreeNode* Solution::flatten(TreeNode* n) {
+    // Do not write main() function.
+    // Do not read input, instead use the arguments to the function.
+    // Do not print the output, instead return values as specified
+    // Still have a doubt. Checkout www.interviewbit.com/pages/sample_codes/ for more details
+    if(n==NULL)
+        return NULL;
+    TreeNode* A = n;   
+    while(A)
+    {
+        if(A->left)
+        {
+            TreeNode* l = A->left;
+            while(l->right)
+                l = l->right;
+            l->right = A->right;
+            A->right = A->left;
+        }
+        A->left = NULL;
+        A=A->right;        
+    }
+    return n;
+}

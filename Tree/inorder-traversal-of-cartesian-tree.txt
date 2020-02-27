@@ -1,0 +1,36 @@
+/**
+ * Definition for binary tree
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+int findMax(vector<int> v, int s, int e)
+{
+    int max = s;
+    for(int i = s+1; i <= e; ++i)
+    {
+        if(v[i] > v[max])
+            max = i;
+    }
+    return max;
+}
+TreeNode* buildTreeHelper(vector<int> v, int s, int e)
+{
+    if(s <= e)
+    {
+        int i = findMax(v, s, e);
+        TreeNode* n = new TreeNode(v[i]);
+        n->left = buildTreeHelper(v, s, i-1);
+        n->right = buildTreeHelper(v, i+1, e);
+        return n;
+    }
+    return NULL;
+}
+TreeNode* Solution::buildTree(vector<int> &A) {
+    if (A.size() == 0)
+        return NULL;
+    return buildTreeHelper(A, 0, A.size()-1);    
+}

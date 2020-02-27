@@ -1,0 +1,25 @@
+string longestPrefix(string a, string b)
+{
+    int n = a.length() < b.length() ? a.length() : b.length();
+    
+    string r;
+    for(int i=0;i<n;++i)
+    {
+        if(a[i] == b[i])
+            r += a[i];
+        else
+            break;    
+    }
+    return r;
+}
+string Solution::longestCommonPrefix(vector<string> &A) {
+    string r;
+    if(A.size() <= 0)
+        return r;
+    r=A[0];
+    for(int i=1;i<A.size();++i)
+    {
+        r = longestPrefix(A[i],r);
+    }
+    return r;
+}

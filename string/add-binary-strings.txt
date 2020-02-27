@@ -1,0 +1,19 @@
+string Solution::addBinary(string A, string B) {
+    int n = A.length();
+    int m = B.length();
+    int c = 0;
+    string ret;
+    for (int i=0,j=0;i<n || j < m; ++i,++j)
+    {
+        c += (i < n) ? (A[n-i-1] - '0') : 0;
+        c += (j < m) ? (B[m-j-1] - '0') : 0;
+
+        char ch = char(c%2) + '0';
+        ret = ch + ret;
+        c = c/2;
+    }
+    if(c > 0)
+        ret = char(char(c) + '0') + ret;
+    
+    return ret;
+}

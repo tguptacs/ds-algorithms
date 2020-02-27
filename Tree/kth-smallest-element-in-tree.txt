@@ -1,0 +1,30 @@
+/**
+ * Definition for binary tree
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+TreeNode* khelper(TreeNode* A, int& B)
+{
+    if(A == NULL)
+    {
+         return NULL;
+    }
+    TreeNode* n = khelper(A->left, B);
+    if(n != NULL)
+        return n;
+    B--;
+    if(0 == B)
+        return A;
+    n = khelper(A->right, B);
+    return n;    
+}
+int Solution::kthsmallest(TreeNode* A, int B) {
+    if(A == NULL)
+        return 0;
+    TreeNode* n = khelper(A, B);
+    return n->val;
+}
